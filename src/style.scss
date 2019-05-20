@@ -1,0 +1,44 @@
+$week: (
+        mon: 1,
+        tue: 2,
+        wed: 3,
+        thu: 4,
+        fri: 5,
+        sat: 6,
+        sun: 7
+);
+
+.calendar {
+  display: grid;
+  align-content: end;
+  grid-template-columns: repeat(7, 100px);
+  grid-gap: 1px;
+  text-align: center;
+  line-height: 100px;
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+}
+
+@for $numberOfDays from 28 through 31 {
+  @for $i from 1 through $numberOfDays {
+    .calendar-#{$numberOfDays} .day:nth-child(#{$i}):after {
+      content: '#{$i}';
+    }
+    .calendar-#{$numberOfDays} .day:nth-child(#{$i})  {
+      border: 1px solid black;
+      background: lightgray;
+      transition: transform .5s;
+      &:hover {
+        background: pink;
+        transform: translateY(-20px);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@each $dayOfWeek, $index in $week {
+  .calendar-#{$dayOfWeek} .day:first-child {
+    grid-column-start: map-get($week, $dayOfWeek);
+  }
+}
